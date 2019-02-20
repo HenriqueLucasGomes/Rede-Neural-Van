@@ -1,0 +1,12 @@
+from random import uniform,randint
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
+print(int(randint(0,1)))
