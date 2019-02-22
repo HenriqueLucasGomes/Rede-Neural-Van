@@ -8,7 +8,7 @@ from random import uniform,randint
 
 #conn=sqlite3.connect(r"/storage/emulated/0/kivy/RN Van-Meu-Jeito/pesos.db")
 #conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\RN Van-Meu-Jeito\pesos.db")
-conn=sqlite3.connect(r"/home/henrique/Área de Trabalho/dev/eXcript/kivy/source/projetos/RN Van-Meu-Jeito/Rede-Neural-Van\pesos.db")
+conn=sqlite3.connect(r"/home/henrique/projetos/RN Van-Meu-Jeito/Rede-Neural-Van/pesos.db")
 
 cursor = conn.execute("select GE from PESOS")
 ge=cursor.fetchall()
