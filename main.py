@@ -273,9 +273,9 @@ def redes():
         pri+=1
 
 def registra(i,c,f,mp,g,des):
-    if (des> 0.5):  # randint(0, 1)==0
+    if (des>0.5):# des==0.5
         conn.execute("update PESOS set " + str(i) + "=" + str(uniform(1, 0)) + " where ID=" + str((67 * c) + f + 1))
-        conn.commit()
+        conn.commit()#mutação
         conn.execute("update PESOS set GE='" + str((g)) + "' where ID=" + str((67 * c) + f + 1))
         conn.commit()
         print("ISSO:" + str((67 * c) + f + 1))
@@ -322,8 +322,8 @@ def crossing(pai,mae,dic):
         while (f < 67):
             for i, k in m.items():
                 if ( a1> 0.5):
-                    if (int(dic[pai])==1000):
-                        registra(i,c,f,p,g,uniform(1,0))
+                    if (int(dic[pai])==1000):#int(dic[pai])==1000
+                        registra(i,c,f,p,g,uniform(1,0))# randint(0, 1)
                     else:
                         if(randint(0,1)==0):
                             registra(i,c,f,p,g,0.6)
@@ -334,7 +334,7 @@ def crossing(pai,mae,dic):
 
                 else:
                     if (int(dic[mae])==1000):
-                        registra(i,c,f,p,g,uniform(1,0))
+                        registra(i,c,f,p,g,uniform(1,0))# randint(0, 1)
                     else:
                         if(randint(0,1)==0):
                             registra(i,c,f,m,g,0.6)
@@ -391,20 +391,30 @@ def selecao():
             v2=i
             m2 = k
     print(str(v1)+" "+str(v2))
-    crossing(v1,v2,dic)
+    if(dic[v1]==dic[v2]):
+        print("É igual")
+        crossing(v1,v2,dic)
+    elif(dic[v1]<dic[v2]):
+        print("Não é igual")
+        krf=300
+        crossing(v1,v1,dic)
+    else:
+        print("Não é igual")
+        krf=300
+        crossing(v2,v2,dic)
 
 class VanApp(App):
     pass
 
 #r=VanApp()
 #r.run()
-k=0
-while(k<300):
+kfr=0
+while(kfr<300):
     redes()
     selecao()
     cursor = conn.execute("select GE from PESOS")
     ge = cursor.fetchall()[0][0]
-    k+=1
+    kfr+=1
 
 
 #SÃO 67 REGISTROS FEITOS NA TABELA PARA UMA REDE NEURAL COMPLETA
