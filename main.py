@@ -18,7 +18,7 @@ else:
     ge=int(ge[0][0])
 
 #qtd=int(input("Quanridade de pesoas:"))
-qtd=3
+qtd=5
 class Neuronio():
     def __init__(self,tipo,rede,ide):
         cursor = conn.execute("select ID from PESOS where ID="+str(ide))
@@ -180,7 +180,7 @@ def atras(t,re,*l):
 def redes():
     global lc
     global dicRes
-    lc = [[0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [0.5, 0.5, 0.5,0.5]]
+    lc = [[0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5,1]]
     dicRes = {}
     pri = 0
     r = 0
@@ -273,21 +273,25 @@ def redes():
             c+=1
         pri+=1
 
-def registra(i,c,f,mp,g,des):
-    if (des>0.5):# des==0.5
-        conn.execute("update PESOS set " + str(i) + "=" + str(uniform(1, 0)) + " where ID=" + str((50 * c) + f + 1))
+def registra(i,c,f,mp,g,raz):
+    if(raz):
+        raz=uniform(1,0)
+    else:
+        raz=0
+    if (raz>0.5):# des==0.5/des>0.5
+        conn.execute("update PESOS set " + str(i) + "=" + str(uniform(1, 0)) + " , GE=" + str((g)) + " where ID=" + str((50 * c) + f + 1))
         conn.commit()#mutação
-        conn.execute("update PESOS set GE='" + str((g)) + "' where ID=" + str((50 * c) + f + 1))
-        conn.commit()
+        # conn.execute("update PESOS set GE='" + str((g)) + "' where ID=" + str((50 * c) + f + 1))
+        # conn.commit()
         print("ISSO:" + str((50 * c) + f + 1))
     else:
-        conn.execute("update PESOS set " + str(i) + "=" + str(mp[i][f][0]) + " where ID=" + str((50 * c) + f + 1))
+        conn.execute("update PESOS set " + str(i) + "=" + str(mp[i][f][0]) +" , GE=" + str((g)) + " where ID=" + str((50 * c) + f + 1))
         conn.commit()
-        conn.execute("update PESOS set GE='" + str((g)) + "' where ID=" + str((50 * c) + f + 1))
-        conn.commit()
+        # conn.execute("update PESOS set GE='" + str((g)) + "' where ID=" + str((50 * c) + f + 1))
+        # conn.commit()
         print("ISSO:" + str((50 * c) + f + 1))
 
-def crossing(pai,mae,dic):
+def crossing(pai,mae,dic,raz):
     g=int(ge)
     g = g+1
     p = {}
@@ -319,28 +323,26 @@ def crossing(pai,mae,dic):
     while (c < 12):
         print("OLHA:"+str(c))
         f = 0#TEMOS ALGUNS PROBLEMAS COM ISSO AQUI!!!!->ele não ta aprendendo direito
-
+        if(randint(0,1)>0.5):#vai mutar
+            raz=True
         while (f < 50):
             for i, k in m.items():
                 if ( a1> 0.5):
                     if (int(dic[pai])>=2000):#int(dic[pai])==1000
-                        registra(i,c,f,p,g,uniform(1,0))# randint(0, 1)
+                        registra(i,c,f,p,g,raz)# randint(0, 1)/uniform(1,0)
                     else:
                         if(randint(0,1)==0):
-                            registra(i,c,f,p,g,0.6)
+                            registra(i,c,f,p,g,raz)
                         else:
-                            registra(i,c,f,p,g,0.4)
-
-
-
+                            registra(i,c,f,p,g,raz)
                 else:
                     if (int(dic[mae])>=2000):
-                        registra(i,c,f,p,g,uniform(1,0))# randint(0, 1)
+                        registra(i,c,f,p,g,raz)# randint(0, 1)
                     else:
                         if(randint(0,1)==0):
-                            registra(i,c,f,m,g,0.6)
+                            registra(i,c,f,m,g,raz)#0.6
                         else:
-                            registra(i,c,f,m,g,0.4)
+                            registra(i,c,f,m,g,raz)#0.4
 
             f += 1
         c += 1
@@ -392,17 +394,23 @@ def selecao():
             v2=i
             m2 = k
     print(str(v1)+" "+str(v2))
-    if(dic[v1]==dic[v2]):
-        print("É igual")
-        crossing(v1,v2,dic)
-    elif(dic[v1]<dic[v2]):
-        print("Não é igual")
-        krf=300
-        crossing(v1,v1,dic)
+    raz=True
+    # if(dic[v1]==dic[v2]):
+    #     print("É igual")
+    #     crossing(v1,v2,dic,raz)
+    # elif(dic[v1]<dic[v2]):
+    #     print("Não é igual")
+    #     krf=300
+    #     crossing(v1,v1,dic,raz)
+    # else:
+    #     print("Não é igual")
+    #     krf=300
+    #     crossing(v2,v2,dic,raz)
+    if(v1<1000 or v2 <1000):
+        raz=False
+        crossing(v1, v2, dic,raz)
     else:
-        print("Não é igual")
-        krf=300
-        crossing(v2,v2,dic)
+        crossing(v1, v2, dic,raz)
 
 class VanApp(App):
     pass
