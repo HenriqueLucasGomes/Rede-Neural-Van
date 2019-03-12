@@ -18,7 +18,7 @@ else:
     ge=int(ge[0][0])
 
 #qtd=int(input("Quanridade de pesoas:"))
-qtd=5
+qtd=2
 class Neuronio():
     def __init__(self,tipo,rede,ide):
         cursor = conn.execute("select ID from PESOS where ID="+str(ide))
@@ -180,7 +180,7 @@ def atras(t,re,*l):
 def redes():
     global lc
     global dicRes
-    lc = [[0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5,1]]
+    lc = [[0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5,0.5]]
     dicRes = {}
     pri = 0
     r = 0
@@ -318,16 +318,16 @@ def crossing(pai,mae,dic):
     m['p4'] = cursor.fetchall()[((mae * 50)):((mae * 50) + 50)]
 
     c = 0
-    a1=p['p1'][4][0] * m['p1'][4][0]
+    # a1=p['p1'][4][0] * m['p1'][4][0]
 
     while (c < 12):
         print("OLHA:"+str(c))
         f = 0#TEMOS ALGUNS PROBLEMAS COM ISSO AQUI!!!!->ele não ta aprendendo direito
-        if(randint(0,1)>0.5):#vai mutar
-            raz=True
+        # if(randint(0,1)>0.5):#vai mutar
+        #     raz=True
         while (f < 50):
             for i, k in m.items():
-                if ( a1> 0.5):
+                if ( randint(0, 1)> 0.5):
                     registra(i, c, f, p, g,uniform(1,0))
                     # if (int(dic[pai])>=2000):#int(dic[pai])==1000
                     #     registra(i,c,f,p,g,raz)# randint(0, 1)/uniform(1,0)
