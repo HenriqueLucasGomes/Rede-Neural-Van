@@ -18,7 +18,7 @@ else:
     ge=int(ge[0][0])
 
 #qtd=int(input("Quanridade de pesoas:"))
-qtd=2
+qtd=3
 class Neuronio():
     def __init__(self,tipo,rede,ide):
         cursor = conn.execute("select ID from PESOS where ID="+str(ide))
@@ -180,7 +180,7 @@ def atras(t,re,*l):
 def redes():
     global lc
     global dicRes
-    lc = [[0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5,0.5]]
+    lc = [[0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [1, 0.5, 0.5], [0.5, 0.5, 0.5,0.5]]
     dicRes = {}
     pri = 0
     r = 0
